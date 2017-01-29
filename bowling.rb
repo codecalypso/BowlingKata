@@ -1,11 +1,13 @@
- # class Player
- #   def initialize(name)
- #     @name = name
- #   end
- # end
+require 'pry'
+class Player
+ def initialize(name)
+   @name = name
+ end
+end
 
 class Game
   attr_accessor :frames
+  @@result=0
 
   def initialize
     @frames = []
@@ -44,14 +46,20 @@ class Game
     end
   end
 
-  def print_score
-    print "Frame Roll Roll Score\n"
+  def format_output
     frames.each do |frame|
-      result=0
       frame.each_slice(2).with_index do |(roll1,roll2),frame_num|
         #print "#{name} final Score"
-        puts  "#{frame_num+1} #{roll1} #{roll2} #{result+=calculate_score([roll1,roll2])}"
+        roll2 = 0 if roll2.nil?
+        binding.pry
+        puts  "#{frame_num+1} #{roll1} #{roll2} #{@@result+=calculate_score([roll1,roll2])}"
       end
     end
+  end
+
+  def print_score
+    print "Frame Roll Roll Score\n"
+    print "Total Score: #{@@result}\n"
+    format_output
   end
 end
